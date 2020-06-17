@@ -1,2 +1,2 @@
-# va-firewall-tester
+# dsva-firewall-tester
 Ruby code to test incidents when the VA firewall rejects binary pdf uploads but returns a 200 status
