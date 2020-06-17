@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'rest-client'
 require 'json'
+require 'progress'
 
 apikey = ''
 
@@ -10,7 +11,7 @@ attempts = 10
 
 pendings = 0
 
-(0...attempts).each do |num|
+(0...attempts).with_progress.each do |num|
   post_response = RestClient.post("https://sandbox-api.va.gov/services/vba_documents/v1/uploads", nil,  apikey: apikey)
 
   parsed = JSON.parse(post_response.body)['data']
@@ -42,11 +43,14 @@ pendings = 0
     put_response = RestClient.put(parsed['attributes']['location'],
                             payload,
                             { 'Content-Encoding': 'application/pdf',
-                              "Content-Type": "multipart/form-data; boundary=#{boundary}"})
+                              "Content-Type": "multipart/form-data; boundary=#{boundary}",
+                              accept: :json})
     unless put_response.body.empty?
       pendings = pendings + 1
       puts Time.now
-      puts put_response.inspect
+      puts "status: #{put_response.code}"
+      puts "cookies: #{put_response.cookies}"
+      puts "headers: #{put_response.headers}"
       puts put_response.body.inspect
       puts "content: #{content}"
       puts "attachement: #{attachment}"
