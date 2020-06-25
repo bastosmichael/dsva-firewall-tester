@@ -7,7 +7,7 @@ apikey = ''
 
 files = Dir.glob('pdf/*')
 
-attempts = 10
+attempts = 1000
 
 pendings = 0
 
