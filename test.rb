@@ -7,7 +7,7 @@ apikey = ''
 
 files = Dir.glob('pdf/*')
 
-attempts = 1000
+attempts = 100
 
 pendings = 0
 
@@ -48,6 +48,7 @@ pendings = 0
     unless put_response.body.empty?
       pendings = pendings + 1
       puts Time.now
+      puts parsed['attributes']['location']
       puts "status: #{put_response.code}"
       puts "cookies: #{put_response.cookies}"
       puts "headers: #{put_response.headers}"
