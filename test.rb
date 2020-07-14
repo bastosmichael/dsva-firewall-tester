@@ -7,11 +7,16 @@ apikey = ''
 
 files = Dir.glob('pdf/*')
 
-attempts = 100
+attempts = 10
 
 pendings = 0
 
-(0...attempts).with_progress.each do |num|
+threads = []
+
+(0...attempts).each do |num|
+
+  threads << Thread.new {
+
   post_response = RestClient.post("https://sandbox-api.va.gov/services/vba_documents/v1/uploads", nil,  apikey: apikey)
 
   parsed = JSON.parse(post_response.body)['data']
@@ -57,9 +62,16 @@ pendings = 0
       puts "attachement: #{attachment}"
     end
   rescue => e
+    pendings = pendings + 1
+    puts parsed['attributes']['location']
     puts e.inspect
   end
+
+  }
+
 end
+
+threads.with_progress.each { |thr| thr.join }
 
 puts "Total Attempts: #{attempts}"
 puts "Total Failures: #{pendings}"
