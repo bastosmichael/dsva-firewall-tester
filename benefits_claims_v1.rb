@@ -81,15 +81,11 @@ threads = []
               }
             }
           }.to_json
-        response = https.request(request)
         begin
             put_response = https.request(request)
-            unless put_response.body.empty?
-              pendings = pendings + 1
-              puts Time.now
-              puts "status: #{put_response.code}"
-              puts put_response.body.inspect
-            end
+            puts Time.now
+            puts "status: #{put_response.code}"
+            puts put_response.body.inspect
           rescue => e
             pendings = pendings + 1
             puts e.inspect
