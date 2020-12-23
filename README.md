@@ -5,7 +5,7 @@ I don't include the apikey in the code but you can sign up for your own [Benefit
 
 Example run and output for test script.
 ```
-michael@michael-Blade-Stealth:~/oddball-va/firewall-pdf-test$ ruby test.rb 
+michael@michael-Blade-Stealth:~/oddball-va/firewall-pdf-test$ ruby benefits_intake.rb 
 ......2020-06-17 13:52:57 -0500
 status: 200
 cookies: {}
